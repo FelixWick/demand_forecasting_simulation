@@ -72,6 +72,8 @@ def simulate_coupling_demand(
     df['C_ID'] = pd.Series([couple_map[x] for x in df['P_ID']])
 
     # add coupling demand effect
-    df['LOG_LAMBDA'] = df.groupby(["C_ID", "L_ID"], group_keys=False).apply(balance, 0.5)['LOG_LAMBDA']
+    df['LOG_LAMBDA'] = df.groupby(["C_ID", "L_ID"],
+                                   group_keys=False).apply(
+                                   balance, np.random.uniform(0.0, 0.5))['LOG_LAMBDA']
 
     return df
