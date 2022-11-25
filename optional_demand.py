@@ -22,9 +22,9 @@ def balance(
         series with rough balansed log lambda
     """
 
-
-    _max = s.max()
-    s = s.apply(lambda x : x + (abs(_max - x) * gain))
+    if -1 not in s['C_ID']:
+        _max = s['LOG_LAMBDA'].max()
+        s['LOG_LAMBDA'] = s['LOG_LAMBDA'].apply(lambda x : x + (abs(_max - x) * gain))
     
     return s
 
@@ -72,6 +72,6 @@ def simulate_coupling_demand(
     df['C_ID'] = pd.Series([couple_map[x] for x in df['P_ID']])
 
     # add coupling demand effect
-    df['LOG_LAMBDA'] = df.groupby(["C_ID", "L_ID"], group_keys=False)["LOG_LAMBDA"].apply(balance, 0.5)
+    df['LOG_LAMBDA'] = df.groupby(["C_ID", "L_ID"], group_keys=False).apply(balance, 0.5)['LOG_LAMBDA']
 
     return df
