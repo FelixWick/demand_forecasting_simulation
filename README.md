@@ -29,6 +29,9 @@ Description of Variables
 **P_ID**
 Identifier of the different products/articles.
 
+**C_ID**
+Identifier of the different coupling products/articles.
+
 **L_ID**
 Identifier of the different locations/stores.
 
