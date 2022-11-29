@@ -244,3 +244,36 @@ def simulate_school_holidays(
     )
 
     return df
+
+def simulate_weather(
+    df: pd.DataFrame,
+    weather_profile: Optional[List[float]] = None
+) -> pd.DataFrame:
+    """
+    Simulates weather profile
+
+    Parameters
+    ----------
+    df
+        dataframe
+
+    Returns
+    -------
+        dataframe added to the Log Lambda column with the change in its sales according to the weather on that day and location.
+    """
+
+    # Set the influence of each weather condition.
+    weather_profile = dict(zip(["sunny","cloudy","rainy"], np.log([2.0, 1.0, 0.5])))
+
+    # Set the weather for each (DATE, L_ID) set.
+    df = df.groupby(["DATE","L_ID"], group_keys=False).apply(lambda d: d.assign(WEATHER=random.choice(list(weather_profile.keys()))))
+
+    # Set sensitivity to weather for each PG_ID_3
+    df = df.groupby(["PG_ID_3"], group_keys=False).apply(lambda d: d.assign(WEATHER_SENSITIVITY=round(random.uniform(0, 1.0), 1)))
+
+    df["LOG_LAMBDA"] += df["WEATHER"].replace(weather_profile) * df["WEATHER_SENSITIVITY"]
+    del df["WEATHER"]
+    del df["WEATHER_SENSITIVITY"]
+
+    return df
+

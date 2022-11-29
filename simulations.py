@@ -19,7 +19,8 @@ from seasonalities import \
     simulate_weekday_profile, \
     simulate_yearly_seasonality, \
     simulate_monthly_profile, \
-    simulate_school_holidays
+    simulate_school_holidays, \
+    simulate_weather
 from prices import \
     simulate_normal_price, \
     simulate_promotions, \
@@ -69,6 +70,8 @@ def main(args):
     )
 
     df = simulate_basic_demand(df)
+
+    df = simulate_weather(df)
 
     df = simulate_trend(df)
 
