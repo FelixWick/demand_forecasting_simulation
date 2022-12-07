@@ -62,7 +62,7 @@ def simulate_coupling_demand(
         df.loc[mask, 'C_ID'] = c_id
         p_id = list(set(p_id) - set(couple)) # not allow overlapping
 
-    # add coupling demand effect anly cou
+    # add coupling demand effect for couple 
     df[df['C_ID'] != -1]['LOG_LAMBDA'] = df.groupby(["C_ID", "L_ID"],
                                    group_keys=False)['LOG_LAMBDA'].apply(
                                    balance, np.random.uniform(0.0, 0.5))
