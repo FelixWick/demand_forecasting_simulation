@@ -23,7 +23,7 @@ def balance(
     """
 
     _max = s.max()
-    s = s.apply(lambda x : x + ((_max - x) * gain))
+    s = s + (_max - s) * gain
     
     return s
 
